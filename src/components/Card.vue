@@ -10,7 +10,7 @@ export default defineComponent({
     pokemon_moves: Array,
     pokemon_stats: Array,
     pokemon_types: Array,
-  }
+  },
 });
 </script>
 
