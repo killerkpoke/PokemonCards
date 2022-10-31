@@ -1,107 +1,97 @@
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { defineComponent } from "vue";
+//import PokeApi from "@/services/PokeApi";
+//import Pokemon from "@/types/Pokemon";
 
-import axios from "axios";
 export default defineComponent({
   data() {
-    const poke_url = "https://pokeapi.co/api/v2/pokemon/charizard";
-    axios
-      .get(poke_url)
-      .then((res) => {
-        const adat = ref(res.data);
 
-        this.pokemon_name = adat.value.name;
-        // pokemon_ability_name: [],
-        this.pokemon_height = adat.value.height;
-        this.pokemon_weight = adat.value.weight;
-        this.pokemon_stat_hp = adat.value.stats.hp;
-
-        //console.log(adat.value.stats); // 6 db statunk van        
-        //console.log(adat.value.stats[0].base_stat);
-        
-        //for(let i = 0; i < adat.value.stats.length; i++) { // computed method-ban kell szamolni, hogy keves maradjon a request.
-          console.log(adat.value.stats[1].base_stat);
-          
-       // }
-
-        
-        
-        // pokemon_moves: [],
-        // pokemon_stats: [],
-        // pokemon_types: [],
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-
-    return {
-      pokemon_name: this.pokemon_name,
-      pokemon_height: this.pokemon_height,
-      pokemon_weight: this.pokemon_weight,
-
-    };
+    // return {
+    //   pokemon: {} as Pokemon,
+    // };
+    /*
+    const poke_url = "https://pokeapi.co/api/v2/pokemon/zapdos";
+    const getRandomElement = (arr: any[]) => arr.length ? arr[Math.floor(Math.random() * arr.length)] : undefined;
+    */
   },
-  // computed() {
-
-  // }
+  // methods: {
+  //   getPokemon(name: any) {
+  //     PokeApi.get(name)
+  //       .then((response) => {
+  //         this.pokemon = response.data;
+  //       })
+  //       .catch((e: Error) => {
+  //         console.log(e);
+  //       });
+  //   },
+  // },
+  // mounted() {
+  //   this.getPokemon(this.$route.params.name);
+  // },
 });
 </script>
 
 <template>
-  <div class="card">
-    <!-- <ul v-if="!loading && data">
-      <li v-for="item of data" v-bind:key="item">
-        <p>
-          <strong>{{ item }}</strong>
-        </p>
-        <p></p>
-      </li>
-    </ul>
-  -->
-    <p>{{ pokemon_name }}</p>
-    <p>{{ pokemon_height }}</p>
-    <p>{{ pokemon_weight }}</p>
-    
-    <p ref="error">{{}}</p>
-    <div class="card-top">
-      <div id="pokemon-name">Charizard</div>
-      <div id="stat-hp">120</div>
-      <div id="pokemon-type">Fire/Fly</div>
+  <div
+    class="mx-auto md:mx-40 ring-8 ring-yellow-400 ring-offset-4 rounded-lg shadow-2xl shadow-white/25 bg-slate-100"
+  >
+    <div class="flex p-2 text-black text-lg">
+      <div id="stat-hp" class="font-semibold flex-auto">120hp</div>
+      <div id="pokemon-name" class="font-semibold flex-auto">Zapdos</div>
+      <div id="pokemon-type" class="font-semibold flex-none">Electric/Fly</div>
     </div>
-    <div class="card-img">
+    <div class="mt-1 mx-1 border border-black bg-black rounded-full"></div>
+    <div class="m-4 border-4 border-yellow-500/50 rounded-md">
       <!-- pokemon image -->
-    </div>
-    <div class="card-middle">
-      <div>
-        <ul>
-          <li></li>
-          <li></li>
-        </ul>
-        <!-- stats -->
+      <div class="max-w-auto max-h-auto w-4/5 h-4/5">
+        <img
+          class="h-auto max-h-60 max-w-60 w-auto bg-contain"
+          src="../assets/logo.svg"
+        />
       </div>
-      <div>
-        <!-- Attack 1 -->
+    </div>
+    <div class="text-black">
+      <div class="grid grid-cols-2 grid-rows-2 text-center">
+        <!-- Attacks -->
+        <!-- name, url.power, url.accuracy, url.type.name -->
+        <div>
+          <div class="p-2 font-semibold">Move Name</div>
+          <div class="p-2 font-semibold">Move Power</div>
+        </div>
+        <div>
+          <div class="p-2 font-semibold">Move Type</div>
+          <div class="p-2 font-semibold">Move Accuracy</div>
+        </div>
+      </div>
+    </div>
+    <div class="text-black">
+      <div class="grid grid-cols-3 grid-rows-3 text-center">
+        <!-- Stats -->
+        <div id="stats">
+          <strong>stat name</strong>
+          <div>value</div>
+        </div>
+        <div>
+          <strong>stat name</strong>
+          <div>value</div>
+        </div>
+        <div>
+          <strong>stat name</strong>
+          <div>value</div>
+        </div>
+        <div>
+          <strong>stat name</strong>
+          <div>value</div>
+        </div>
+        <div>
+          <strong>stat name</strong>
+          <div>value</div>
+        </div>
+        <div>
+          <strong>stat name</strong>
+          <div>value</div>
+        </div>
       </div>
     </div>
   </div>
 </template>
-
-<style scoped>
-body {
-  font-size: 16px;
-}
-.card {
-  border: 10px yellow solid;
-}
-.card-top {
-  display: flex;
-  font-size: 32px;
-}
-#pokemon-name {
-  float: left;
-  margin-right: 10px;
-}
-#stat-hp {
-  float: right;
-}
-</style>
