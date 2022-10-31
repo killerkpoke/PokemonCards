@@ -1,9 +1,14 @@
-export default interface Pokemon {
+interface Pokemon {
   id: null;
   name: string;
-  sprite: object;
-  types: [];
-  moves: [];
-  stats: [];
+  sprites: {
+    front_default: string;
+  };
+  types: Array<object>;
+  moves: Array<object>;
+  stats: Array<object>;
+  
 }
+
+export default Pokemon;
 
