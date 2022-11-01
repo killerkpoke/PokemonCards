@@ -46,7 +46,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <main>
+  <main class="m-8">
     <div class="mb-12 grid justify-center">
       <label
         for="first_name"
@@ -63,13 +63,28 @@ export default defineComponent({
         @change="getPokemon(pokemon.name)"
       />
     </div>
-    <div
-      v-if="pokemon.id == null"
-      class="font-semibold flex-auto capitalize text-center border border-sky-700 ring-4 rounded-xl p-4 text-green-300 bg-sky-700"
-    >
-      Error occured...
+    <div v-if="pokemon.id == null" class="flex items-center justify-center">
+      <div
+        class="font-semibold text-xl inline-flex items-center capitalize text-center border border-sky-700 ring-4 rounded-xl p-4 text-green-300 bg-sky-700"
+      >
+        <svg class="animate-spin h-5 w-5 mr-2" viewBox="0 0 24 24">
+          <circle
+            class="opacity-25"
+            cx="12"
+            cy="12"
+            r="10"
+            stroke="currentColor"
+            stroke-width="4"
+          ></circle>
+          <path
+            class="opacity-75"
+            fill="currentColor"
+            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+          ></path>
+        </svg>
+        <label>Processing...</label>
+      </div>
     </div>
-
     <div
       v-else-if="pokemon.id != null"
       class="mx-auto md:mx-40 ring-8 ring-yellow-400 ring-offset-4 rounded-lg shadow-2xl shadow-white/25 bg-slate-100"
@@ -104,29 +119,29 @@ export default defineComponent({
           <!-- Attack -->
           <!-- name, url.power, url.accuracy, url.type.name -->
           <div>
-            <div class="font-semibold">move name:</div>
-            <div v-if="pokemonTM.name" class="font-semibold">
+            <strong>move name:</strong>
+            <div v-if="pokemonTM.name">
               {{ pokemonTM.name }}
             </div>
             <div v-else class="font-semibold">-</div>
           </div>
           <div>
-            <div class="font-semibold">move power:</div>
-            <div v-if="pokemonTM.power" class="font-semibold">
+            <strong>move power:</strong>
+            <div v-if="pokemonTM.power">
               {{ pokemonTM.power }}
             </div>
             <div v-else class="font-semibold">-</div>
           </div>
           <div>
-            <div class="font-semibold">move accuracy:</div>
-            <div v-if="pokemonTM.accuracy" class="font-semibold">
+            <strong>move accuracy:</strong>
+            <div v-if="pokemonTM.accuracy">
               {{ pokemonTM.accuracy }}
             </div>
             <div v-else class="font-semibold">-</div>
           </div>
           <div>
-            <div class="font-semibold">move pp:</div>
-            <div v-if="pokemonTM.pp" class="font-semibold">
+            <strong>move pp:</strong>
+            <div v-if="pokemonTM.pp">
               {{ pokemonTM.pp }}
             </div>
             <div v-else class="font-semibold">-</div>
