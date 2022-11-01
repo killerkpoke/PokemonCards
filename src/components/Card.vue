@@ -1,14 +1,12 @@
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { defineComponent } from "vue";
 import PokeApi from "@/services/PokeApi";
 import type Pokemon from "@/types/Pokemon";
 import type PokemonTM from "@/types/PokemonTM";
+import { EMPTY_OBJ } from "@vue/shared";
 
 export default defineComponent({
   data() {
-    // const poke_url = "https://pokeapi.co/api/v2/pokemon/eevee";
-    // const getRandomElement = (arr: any[]) => arr.length ? arr[Math.floor(Math.random() * arr.length)] : undefined;
-
     return {
       pokemon: {} as Pokemon,
       pokemonTM: {} as PokemonTM,
@@ -17,9 +15,17 @@ export default defineComponent({
   methods: {
     getPokemon(name: string) {
       PokeApi.get(name)
-        .then((response) => {
+        .then((response: any) => {
           this.pokemon = response.data;
           console.log(this.pokemon);
+
+          const getRandomElement = (arr: any[]) =>
+            arr.length
+              ? arr[Math.floor(Math.random() * arr.length)]
+              : undefined;
+          const str = getRandomElement(this.pokemon.moves).move.url;
+          const move_id = str.split("/");
+          this.getSkill(move_id[6]);
         })
         .catch((e: Error) => {
           console.log(e);
@@ -27,7 +33,7 @@ export default defineComponent({
     },
     getSkill(id: number) {
       PokeApi.getTm(id)
-        .then((response) => {
+        .then((response: any) => {
           this.pokemonTM = response.data;
           console.log(this.pokemonTM);
         })
@@ -35,11 +41,6 @@ export default defineComponent({
           console.log(e);
         });
     },
-  },
-  mounted() {
-    this.getPokemon("eevee");
-    //this.getPokemon("eevee"); //this.$route.params.name);
-    this.getSkill(19);
   },
 });
 </script>
@@ -63,6 +64,14 @@ export default defineComponent({
       />
     </div>
     <div
+      v-if="pokemon.id == null"
+      class="font-semibold flex-auto capitalize text-center border border-sky-700 ring-4 rounded-xl p-4 text-green-300 bg-sky-700"
+    >
+      Error occured...
+    </div>
+
+    <div
+      v-else-if="pokemon.id != null"
       class="mx-auto md:mx-40 ring-8 ring-yellow-400 ring-offset-4 rounded-lg shadow-2xl shadow-white/25 bg-slate-100"
     >
       <div class="flex p-2 text-black text-lg">
@@ -81,13 +90,11 @@ export default defineComponent({
       <div class="mt-1 mx-1 border border-black bg-black rounded-full"></div>
       <div class="m-4 border-4 border-yellow-500/50 rounded-md">
         <!-- pokemon image -->
-        <div v-for="(item, k) in pokemon.sprites" :key="k">
-          <img
-            class="w-screen h-max bg-contain"
-            alt="pokepics"
-            :src="pokemon.sprites.front_default"
-          />
-        </div>
+        <img
+          class="w-screen h-max bg-contain text-black"
+          alt="pokepics"
+          :src="pokemon.sprites.front_default"
+        />
       </div>
       <div class="text-black">
         <div
@@ -98,19 +105,31 @@ export default defineComponent({
           <!-- name, url.power, url.accuracy, url.type.name -->
           <div>
             <div class="font-semibold">move name:</div>
-            <div class="font-semibold">{{ pokemonTM.name }}</div>
+            <div v-if="pokemonTM.name" class="font-semibold">
+              {{ pokemonTM.name }}
+            </div>
+            <div v-else class="font-semibold">-</div>
           </div>
           <div>
             <div class="font-semibold">move power:</div>
-            <div class="font-semibold">{{ pokemonTM.power }}</div>
+            <div v-if="pokemonTM.power" class="font-semibold">
+              {{ pokemonTM.power }}
+            </div>
+            <div v-else class="font-semibold">-</div>
           </div>
           <div>
             <div class="font-semibold">move accuracy:</div>
-            <div class="font-semibold">{{ pokemonTM.accuracy }}</div>
+            <div v-if="pokemonTM.accuracy" class="font-semibold">
+              {{ pokemonTM.accuracy }}
+            </div>
+            <div v-else class="font-semibold">-</div>
           </div>
           <div>
             <div class="font-semibold">move pp:</div>
-            <div class="font-semibold">{{ pokemonTM.pp }}</div>
+            <div v-if="pokemonTM.pp" class="font-semibold">
+              {{ pokemonTM.pp }}
+            </div>
+            <div v-else class="font-semibold">-</div>
           </div>
         </div>
       </div>

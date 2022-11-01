@@ -1,7 +1,7 @@
 import http from "@/http-common";
 class PokeApi {
   get(name: string): Promise<string> {
-    return http.get(`/pokemon/${name}`);
+    return http.get(`/pokemon/${name.toLowerCase()}`);
   }
   getTm(id: number): Promise<number> {
     return http.get(`/move/${id}`);
